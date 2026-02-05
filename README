@@ -1,0 +1,19 @@
+# Web Scraper – Job & Offers Automation (Python)
+
+This project is a Python-based web scraper that extracts real-world data from multiple websites, filters relevant results, and exports them into structured formats.
+
+## Features
+- Web scraping using Requests, BeautifulSoup, and Selenium
+- Extracts job offers and product data
+- Filters best offers based on keywords
+- Saves results to CSV and JSON
+- Clean and modular project structure
+
+## Technologies Used
+- Python
+- Requests
+- BeautifulSoup
+- Selenium
+- CSV & JSON handling
+
+## Project Structure
