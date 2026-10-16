@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Web Extractor</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+
+            <a href="/" class="logo">
+                <span class="logo-icon">⌕</span>
+                Web Extractor
+            </a>
+
+            <span class="status">
+                ● Disponible
+            </span>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <p class="eyebrown">EXTRACCIÓN WEB</p>
+
+                <h1>
+                    Convierte información web<br>
+                    en datos organizados.
+                </h1>
+
+                <p class="hero-description">
+                    Extrae información de páginas web y prepárala
+                    para trabajar con ella de forma sencilla.
+                </p>
+
+                <div class="extractor-card">
+
+                    <form action="/extraer" method="POST">
+
+                        <label for="url">
+                            URL de la página web
+                        </label>
+
+                        <div class="url-container">
+
+                            <input
+                                type="url"
+                                id="url"
+                                name="url"
+                                placeholder="https://ejemplo.com"
+                                required
+                            >
+
+                            <button type="submit">
+                                Extraer información
+                            </button>
+
+                        </div>
+
+                        <p class="helper-text">
+                            Introduce la dirección de una página web para comenzar.
+                        </p>
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+        
+        {% if resultados %}
+        <section class="results">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">RESULTADOS</p>
+                    <h2>Información encontrada</h2>
+                </div>
+
+                <div class="results-card">
+                    <div class="results-header">
+                        <span>Tipo</span>
+                        <span>Información</span>
+                        <span>Enlace</span>
+                    </div>
+
+                    {% for resultado in resultados %}
+                    <div class="result-row">
+                        <span>{{ resultado["tipo"] }}</span>
+                        <span>{{ resultado["texto"] }}</span>
+
+                        {% if resultado["enlace"] %}
+                        <a href="{{ resultado['enlace'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            Ver
+                        </a>
+                        {% else %}
+                        <span>—</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if error %}
+        <section class="results">
+            <div class="container">
+
+                <div class="export-actions">
+                    <form action="/exportar/csv" method="POST">
+                        <input
+                            type="hidden"
+                            name="url"
+                            value="{{ source_url }}"
+                        >
+                        <button type="submit">Descargar CSV</button>
+                    </form>
+
+                    <form action="/exportar/json" method="POST">
+                        <input
+                            type="hidden"
+                            name="url"
+                            value="{{ source_url }}"
+                        >
+                        <button type="submit">Descargar JSON</button>
+                    </form>
+                </div>
+                <div class="results-card">
+                    <p>{{ error }}</p>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="feature">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrown">¿QUÉ PUEDES HACER?</p>
+
+                    <h2>
+                        De una página web a datos útiles.
+                    </h2>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            ↗
+                        </div>
+
+                        <h3>
+                            Extraer
+                        </h3>
+
+                        <p>
+                            Obtén información estructurada
+                            directamente desde una página web.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            ≡
+                        </div>
+
+                        <h3>
+                            Organizar
+                        </h3>
+
+                        <p>
+                            Visualiza los datos obtenidos
+                            de una manera clara y ordenada.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            ↓
+                        </div>
+
+                        <h3>
+                            Exportar
+                        </h3>
+
+                        <p>
+                            Guarda tus resultados en formatos
+                            como CSV, JSON o Excel.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+                Web Extractor · Desarrollado con Python y Flask
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
