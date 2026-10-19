@@ -373,3 +373,41 @@ footer {
     }
 
 }
+
+
+/* ==============================
+   BOTONES DE EXPORTACION
+============================== */
+.export-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.export-actions form {
+    margin: 0;
+}
+
+.export-actions button {
+    padding: 11px 18px;
+    border: 1px solid #2f9e72;
+    border-radius: 8px;
+    background: #2f9e72;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease,
+                transform 0.2s ease;
+}
+
+.export-actions button:hover {
+    background: #25845e;
+    transform: translateY(-1px);
+}
+
+.export-actions button:focus-visible {
+    outline: 3px solid #a7e4c8;
+    outline-offset: 3px;
+}

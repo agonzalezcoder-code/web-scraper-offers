@@ -74,7 +74,7 @@
             </div>
         </section>
 
-        
+        <!-- SECCIÓN DE RESULTADOS CORREGIDA -->
         {% if resultados %}
         <section class="results">
             <div class="container">
@@ -82,38 +82,6 @@
                     <p class="eyebrow">RESULTADOS</p>
                     <h2>Información encontrada</h2>
                 </div>
-
-                <div class="results-card">
-                    <div class="results-header">
-                        <span>Tipo</span>
-                        <span>Información</span>
-                        <span>Enlace</span>
-                    </div>
-
-                    {% for resultado in resultados %}
-                    <div class="result-row">
-                        <span>{{ resultado["tipo"] }}</span>
-                        <span>{{ resultado["texto"] }}</span>
-
-                        {% if resultado["enlace"] %}
-                        <a href="{{ resultado['enlace'] }}"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                            Ver
-                        </a>
-                        {% else %}
-                        <span>—</span>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-        {% endif %}
-
-        {% if error %}
-        <section class="results">
-            <div class="container">
 
                 <div class="export-actions">
                     <form action="/exportar/csv" method="POST">
@@ -134,12 +102,55 @@
                         <button type="submit">Descargar JSON</button>
                     </form>
                 </div>
+
+                <div class="results-card">
+                    <div class="results-header">
+                        <span>Tipo</span>
+                        <span>Información</span>
+                        <span>Enlace</span>
+                    </div>
+
+                    {% for resultado in resultados %}
+                    <div class="result-row">
+                        <span>{{ resultado["tipo"] }}</span>
+                        <span>{{ resultado["texto"] }}</span>
+
+                        {% if resultado["enlace"] %}
+                        <a
+                            href="{{ resultado['enlace'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Ver</a>
+                        {% else %}
+                        <span>—</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        {% elif resultados is not none %}
+        <section class="results">
+            <div class="container">
+                <div class="results-card">
+                    <p>No encontramos información para mostrar en esta página.</p>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- SECCIÓN DE ERROR -->
+        {% if error %}
+        <section class="results">
+            <div class="container">
                 <div class="results-card">
                     <p>{{ error }}</p>
                 </div>
             </div>
         </section>
         {% endif %}
+
 
         <section class="feature">
             <div class="container">
@@ -202,9 +213,7 @@
     </main>
 
     <footer>
-
         <div class="container">
-
             <p>
                 Web Extractor · Desarrollado con Python y Flask
             </p>

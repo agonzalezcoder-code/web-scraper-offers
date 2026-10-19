@@ -47,13 +47,18 @@ def parse_generic(html, base_url):
                 "enlace": ""
             })
 
+    
     # 4. Detectar enlaces
     for link in soup.find_all("a", href=True):
         text = link.get_text(" ", strip=True)
         href = link["href"].strip()
 
-        if text and href and not href.startswith(
-            ("javascript:", "mailto:", "tel:")
+        if (
+            text
+            and href
+            and not href.startswith(
+                ("javascript:", "mailto:", "tel:")
+            )
         ):
             results.append({
                 "tipo": "Enlace",
