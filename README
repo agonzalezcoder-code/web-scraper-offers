@@ -1,19 +1,57 @@
-# Web Scraper – Job & Offers Automation (Python)
+# ⌕ Web Extractor & Scraper
 
-This project is a Python-based web scraper that extracts real-world data from multiple websites, filters relevant results, and exports them into structured formats.
+Una potente aplicación web desarrollada en **Python** y **Flask** que permite extraer, organizar y estructurar información clave de cualquier sitio web (títulos, tablas, listas y tarjetas de productos) en tiempo real, con opciones de filtrado avanzado y exportación múltiple.
 
-## Features
-- Web scraping using Requests, BeautifulSoup, and Selenium
-- Extracts job offers and product data
-- Filters best offers based on keywords
-- Saves results to CSV and JSON
-- Clean and modular project structure
+## Características Principales
 
-## Technologies Used
-- Python
-- Requests
-- BeautifulSoup
-- Selenium
-- CSV & JSON handling
+- **Extracción Inteligente (Scraping):** Clasifica automáticamente la información en Títulos, Listas, Tablas estructuradas y Tarjetas de productos (emparejando nombre y precio automáticamente).
 
-## Project Structure
+- **Filtrado en Tiempo Real:** Barra de búsqueda integrada con JavaScript para filtrar la información extraída al instante sin recargar la página.
+
+- **Contador Dinámico:** Muestra la cantidad exacta de elementos recuperados.
+
+- **Exportación Múltiple:** Descarga de datos nativa en formatos **JSON**, **CSV** (optimizado para caracteres en español) y **Microsoft Excel (.xlsx)**.
+
+- **Robustez y Seguridad:** Validación de URLs, control de tiempos de espera (*timeouts*), mitigación de ataques SSRF (bloqueo de accesos locales) y optimización mediante sesiones de Flask para evitar peticiones duplicadas.
+
+## Tecnologías Utilizadas
+
+- **Backend:** Python 3, Flask (Gestión de sesiones y enrutamiento).
+- **Scraping & Red:** BeautifulSoup4 (Parseo HTML), Requests (Peticiones HTTP con User-Agent).
+- **Manejo de Datos:** Openpyxl (Generación nativa de Excel), CSV, JSON.
+- **Frontend:** HTML5, CSS3 (Diseño responsivo y adaptativo), JavaScript Vanilla (Filtro en tiempo real).
+
+## Instalación y Uso Local
+
+Sigue estos pasos para ejecutar el proyecto en tu computadora:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com
+   cd tu-repositorio
+   ```
+
+2. **Crear e iniciar un entorno virtual (Opcional pero recomendado):**
+   ```bash
+   python -m venv venv
+   # En Windows:
+   venv\Scripts\activate
+   # En Mac/Linux:
+   source venv/activate
+   ```
+
+3. **Instalar las dependencias requeridas:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Ejecutar la aplicación:**
+   ```bash
+   python app.py
+   ```
+
+5. **Acceder a la herramienta:**
+   Abre tu navegador web e ingresa a: `http://127.0.0.1:5000`
+
+## Notas de Seguridad y Robustez
+El extractor incluye una capa de protección perimetral que trunca resultados masivos a un máximo de 500 elementos para proteger la estabilidad del servidor, y cuenta con controladores amigables para errores de red comunes (404, 403 y Tiempos de espera agotados).

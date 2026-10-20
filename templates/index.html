@@ -74,13 +74,23 @@
             </div>
         </section>
 
-        <!-- SECCIÓN DE RESULTADOS CORREGIDA -->
+        <!-- SECCIÓN DE RESULTADOS -->
         {% if resultados %}
         <section class="results">
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow">RESULTADOS</p>
-                    <h2>Información encontrada</h2>
+                    <h2>Información encontrada ({{ resultados|length }} elementos)</h2>
+                </div>
+
+                <!-- BARRA DE BÚSQUEDA -->
+                <div class="search-filter-container" style="margin-bottom: 20px;">
+                    <input 
+                        type="text" 
+                        id="inputBusqueda" 
+                        placeholder="🔍 Filtrar resultados por palabra clave..." 
+                        style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"
+                    >
                 </div>
 
                 <div class="export-actions">
@@ -101,7 +111,18 @@
                         >
                         <button type="submit">Descargar JSON</button>
                     </form>
+
+                    <!-- 🔽 AQUÍ AÑADIMOS EL BOTÓN DE EXCEL 🔽 -->
+                    <form action="/exportar/excel" method="POST">
+                        <input
+                            type="hidden"
+                            name="url"
+                            value="{{ source_url }}"
+                        >
+                        <button type="submit" style="background-color: #107c41; color: white;">Descargar Excel</button>
+                    </form>
                 </div>
+
 
                 <div class="results-card">
                     <div class="results-header">
@@ -113,19 +134,30 @@
                     {% for resultado in resultados %}
                     <div class="result-row">
                         <span>{{ resultado["tipo"] }}</span>
-                        <span>{{ resultado["texto"] }}</span>
 
-                        {% if resultado["enlace"] %}
-                        <a
-                            href="{{ resultado['enlace'] }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >Ver</a>
+                        <!-- Si es un enlace o una tarjeta con link, permitimos hacer clic -->
+                        {% if resultado["tipo"] == "Enlace" %}
+                            <span>
+                                <a href="{{ resultado['enlace'] }}" target="_blank" rel="noopener noreferrer">
+                                    {{ resultado["texto"] }}
+                                </a>
+                            </span>
+                            <span>
+                                <a href="{{ resultado['enlace'] }}" target="_blank" rel="noopener noreferrer">Visitar sitio ↗</a>
+                            </span>
+                        {% elif resultado["tipo"] == "Tarjeta" and resultado["enlace"] %}
+                            <span>{{ resultado["texto"] }}</span>
+                            <span>
+                                <a href="{{ resultado['enlace'] }}" target="_blank" rel="noopener noreferrer">Ver producto ↗</a>
+                            </span>
                         {% else %}
-                        <span>—</span>
+                            <!-- Si es un título, tabla, lista o tarjeta sin link -->
+                            <span>{{ resultado["texto"] }}</span>
+                            <span>—</span>
                         {% endif %}
                     </div>
                     {% endfor %}
+
                 </div>
             </div>
         </section>
@@ -140,7 +172,6 @@
         </section>
         {% endif %}
 
-        <!-- SECCIÓN DE ERROR -->
         {% if error %}
         <section class="results">
             <div class="container">
@@ -219,6 +250,27 @@
             </p>
         </div>
     </footer>
+
+    <!-- SCRIPT PARA EL FILTRADO EN TIEMPO REAL -->
+    <script>
+        document.getElementById('inputBusqueda').addEventListener('keyup', function() {
+            // Convertimos lo que escribe el usuario a minúsculas para que no importe si usa mayúsculas
+            let filtro = this.value.toLowerCase().trim();
+            
+            let filas = document.querySelectorAll('.results-card .result-row');
+
+            filas.forEach(function(fila) {
+                let textoFila = fila.textContent.toLowerCase();
+
+                // Si el texto de la fila incluye la palabra que busca el usuario, la mostramos; si no, la ocultamos
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = 'grid'; // Restaura el diseño original de la fila
+                } else {
+                    fila.style.display = 'none'; // Oculta la fila por completo
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
