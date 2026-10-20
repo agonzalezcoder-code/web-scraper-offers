@@ -28,7 +28,7 @@ Sigue estos pasos para ejecutar el proyecto en tu computadora:
 1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com
-   cd tu-repositorio
+   cd https://github.com/agonzalezcoder-code/web-scraper-offers
    ```
 
 2. **Crear e iniciar un entorno virtual (Opcional pero recomendado):**
